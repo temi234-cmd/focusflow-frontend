@@ -10,7 +10,6 @@ import {
   LogOut,
   Zap,
   X,
-  Menu,
 } from 'lucide-react'
 import { auth } from '../services/firebase'
 import { signOut } from 'firebase/auth'

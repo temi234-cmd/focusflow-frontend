@@ -7,7 +7,6 @@ import {
   Star, 
   Globe, 
   Share2,
-  Play,
   ArrowRight
 } from "lucide-react";
 import { useNavigate } from 'react-router-dom'

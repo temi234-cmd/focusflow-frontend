@@ -10,13 +10,11 @@ import {
   User
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom'
-interface SignUpProps {
-  onSignInClick?: () => void;
-}
+
 import { auth, googleProvider } from '../services/firebase'
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
 
-export default function SignUp({ onSignInClick }: SignUpProps) {
+export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
