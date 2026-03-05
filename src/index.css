@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #6467f2;
+  --color-accent-green: #10b981;
+  --color-background-dark: #0F172A;
+  --color-card-dark: #1E293B;
+  --color-border-dark: #334155;
+}
+
+@layer base {
+  body {
+    @apply bg-[#0F172A] text-slate-100 antialiased selection:bg-primary/30;
+    font-family: "Inter", sans-serif;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-slate-800/50 backdrop-blur-xl border border-white/10;
+  }
+  
+  .hero-gradient {
+    background: radial-gradient(circle at 50% -20%, rgba(100, 103, 242, 0.15) 0%, rgba(15, 23, 42, 0) 50%);
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
