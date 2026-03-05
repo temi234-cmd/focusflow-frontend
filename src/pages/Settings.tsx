@@ -55,7 +55,7 @@ const Toast = ({ message, type }: { message: string; type: 'success' | 'error' }
 
 export default function Settings() {
   const { openMenu } = useLayout();
-  const { theme, setTheme } = useTheme();
+  // const { theme, setTheme } = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [notifications, setNotifications] = useState({
