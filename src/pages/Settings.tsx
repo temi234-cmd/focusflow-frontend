@@ -293,7 +293,7 @@ export default function Settings() {
           <div className="h-px bg-slate-800"></div>
 
           {/* Appearance */}
-          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          {/* <section className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div>
               <h3 className="text-lg font-semibold">Appearance</h3>
               <p className="text-sm text-slate-400 mt-1">Customize how FocusFlow looks on your device.</p>
@@ -314,7 +314,7 @@ export default function Settings() {
                 </button>
               </div>
             </div>
-          </section>
+          </section> */}
 
           <div className="h-px bg-slate-800"></div>
 
