@@ -19,7 +19,6 @@ import {
   reauthenticateWithCredential,
   updatePassword
 } from 'firebase/auth';
-import { useTheme } from '../hooks/useTheme';
 import { saveNotificationPrefs, getNotificationPrefs, subscribeToPush, unsubscribeFromPush } from '../services/notificationService';
 
 const Toggle = ({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) => (
