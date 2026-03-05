@@ -14,12 +14,12 @@ import { useLayout } from '../layouts/DashboardLayout';
 import { auth } from '../services/firebase';
 import {
   updateProfile,
-  updateEmail,
   deleteUser,
   EmailAuthProvider,
   reauthenticateWithCredential,
   updatePassword
 } from 'firebase/auth';
+import { useTheme } from '../hooks/useTheme';
 import { saveNotificationPrefs, getNotificationPrefs, subscribeToPush, unsubscribeFromPush } from '../services/notificationService';
 
 const Toggle = ({ checked, onChange }: { checked: boolean; onChange: (v: boolean) => void }) => (
@@ -55,7 +55,7 @@ const Toast = ({ message, type }: { message: string; type: 'success' | 'error' }
 
 export default function Settings() {
   const { openMenu } = useLayout();
-  // const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [notifications, setNotifications] = useState({
@@ -167,18 +167,9 @@ export default function Settings() {
         displayName: fullName,
         photoURL: avatarPreview !== photoURL ? avatarPreview : user.photoURL,
       });
-      if (email !== user.email) {
-        await updateEmail(user, email);
-      }
       showToast('Profile updated successfully!', 'success');
     } catch (error: any) {
-      if (error.code === 'auth/requires-recent-login') {
-        showToast('Please sign out and sign back in to change your email.', 'error');
-      } else if (error.code === 'auth/email-already-in-use') {
-        showToast('That email is already in use.', 'error');
-      } else {
-        showToast('Failed to save changes. Please try again.', 'error');
-      }
+      showToast('Failed to save changes. Please try again.', 'error');
     } finally {
       setIsSaving(false);
     }
@@ -292,7 +283,8 @@ export default function Settings() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2 text-slate-400">Email Address</label>
-                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" />
+                  <input type="email" value={email} readOnly className="w-full bg-slate-900 border border-slate-800 rounded-lg px-4 py-2.5 text-sm outline-none text-slate-500 cursor-not-allowed" />
+                  <p className="text-xs text-slate-600 mt-1">Email cannot be changed</p>
                 </div>
               </div>
             </div>
@@ -301,7 +293,7 @@ export default function Settings() {
           <div className="h-px bg-slate-800"></div>
 
           {/* Appearance */}
-          {/* <section className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div>
               <h3 className="text-lg font-semibold">Appearance</h3>
               <p className="text-sm text-slate-400 mt-1">Customize how FocusFlow looks on your device.</p>
@@ -322,7 +314,7 @@ export default function Settings() {
                 </button>
               </div>
             </div>
-          </section> */}
+          </section>
 
           <div className="h-px bg-slate-800"></div>
 
