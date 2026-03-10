@@ -7,6 +7,7 @@ import { generateWeeklyDigest } from "../services/aiservices";
 import { useLayout } from '../layouts/DashboardLayout';
 import { auth } from '../services/firebase';
 import API from '../services/api';
+import { subscribeToPush, saveNotificationPrefs } from '../services/notificationService';
 
 interface StatCardProps {
   title: string;
@@ -163,6 +164,21 @@ const fetchDigest = useCallback(async () => {
     if (userName !== 'there') fetchDigest();
   }, [userName]);
 
+  useEffect(() => {
+  const requestPushPermission = async () => {
+    if (!('Notification' in window)) return;
+    if (Notification.permission === 'granted') return;
+    if (Notification.permission === 'denied') return;
+
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      await subscribeToPush();
+      await saveNotificationPrefs({ email: true, push: true, aiDigest: false });
+    }
+  };
+
+  requestPushPermission();
+}, []);
   // Derived stats
   const completedTasks = tasks.filter(t => t.status === 'Done').length;
   const activeHabits = habits.filter(h => h.streak > 0).length;
