@@ -7,43 +7,88 @@ import {
   Star, 
   Globe, 
   Share2,
-  ArrowRight
+  ArrowRight,
+  Menu,
+  X
 } from "lucide-react";
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
 const Navbar = () => {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  const handleNavClick = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
   
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-[#0F172A]/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-primary p-1.5 rounded-lg flex items-center justify-center text-white">
-            <Bolt className="w-5 h-5 fill-current" />
+    <>
+      <header className="sticky top-0 z-50 w-full border-b border-slate-800 bg-[#0F172A]/80 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="bg-primary p-1.5 rounded-lg flex items-center justify-center text-white">
+              <Bolt className="w-5 h-5 fill-current" />
+            </div>
+            <span className="text-xl font-bold tracking-tight text-white">FocusFlow</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">FocusFlow</span>
+          <nav className="hidden md:flex items-center gap-8">
+            <a 
+              className="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
+              onClick={() => handleNavClick('features')}
+            >Features</a>
+            <a 
+              className="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
+              onClick={() => handleNavClick('how-it-works')}
+            >How it works</a>
+            <a 
+              className="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
+              onClick={() => handleNavClick('testimonials')}
+            >Testimonials</a>
+          </nav>
+          <div className="hidden md:flex items-center gap-3">
+            <button onClick={() => navigate('/signin')} className="px-4 py-2 text-sm font-semibold text-slate-200 hover:text-primary transition-colors">Login</button>
+            <button onClick={() => navigate('/signup')} className="px-5 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded-lg shadow-lg shadow-primary/20 transition-all">Sign Up</button>
+          </div>
+          <div className="md:hidden">
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)} 
+              className="text-white p-2 hover:bg-slate-700 rounded-lg transition-colors"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
-        <nav className="hidden md:flex items-center gap-8">
-<nav className="hidden md:flex items-center gap-8">
-  <a 
-    className="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
-    onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-  >Features</a>
-  <a 
-    className="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
-    onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
-  >How it works</a>
-  <a 
-    className="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
-    onClick={() => document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' })}
-  >Testimonials</a>
-</nav>
-        </nav>
-        <div className="flex items-center gap-3">
-          <button onClick={() => navigate('/signin')} className="px-4 py-2 text-sm font-semibold text-slate-200 hover:text-primary transition-colors">Login</button>
-          <button onClick={() => navigate('/signup')} className="px-5 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded-lg shadow-lg shadow-primary/20 transition-all">Sign Up</button>
+      </header>
+      {isMenuOpen && (
+        <div className="md:hidden bg-slate-800 border-b border-slate-700">
+          <div className="px-6 py-4 space-y-4">
+            <a 
+              className="block text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
+              onClick={() => handleNavClick('features')}
+            >Features</a>
+            <a 
+              className="block text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
+              onClick={() => handleNavClick('how-it-works')}
+            >How it works</a>
+            <a 
+              className="block text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer" 
+              onClick={() => handleNavClick('testimonials')}
+            >Testimonials</a>
+            <div className="flex flex-col gap-2 pt-4 border-t border-slate-600">
+              <button 
+                onClick={() => { navigate('/signin'); setIsMenuOpen(false); }} 
+                className="text-left px-4 py-2 text-sm font-semibold text-slate-200 hover:text-primary transition-colors"
+              >Login</button>
+              <button 
+                onClick={() => { navigate('/signup'); setIsMenuOpen(false); }} 
+                className="px-4 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded-lg shadow-lg shadow-primary/20 transition-all"
+              >Sign Up</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </header>
+      )}
+    </>
   );
 };
 
